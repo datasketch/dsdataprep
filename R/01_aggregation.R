@@ -4,6 +4,7 @@
 
 
 # es una funcion que es ejecutada por do.call puede ser sum, mean, max, min, sd, etc
+#' @keywords internal
 aggregation <- function(aggregation, ...) {
   if (is.null(aggregation) || is.na(aggregation)) {
     stop("The aggregation type must be specified.")
