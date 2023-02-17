@@ -8,6 +8,9 @@ Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Imports: 
     dplyr,
+    glue,
+    htmltools,
+    purrr,
     rlang
 Suggests: 
     ggplot2,
