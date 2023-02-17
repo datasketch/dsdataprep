@@ -10,9 +10,6 @@
 #'
 #' @return the sorted data frame.
 #'
-#' @examples
-#' numeric_sort(mtcars, "mpg", "cyl", "desc")
-#'
 #' @import dplyr
 #' @importFrom tidyr all_of
 #' @keywords internal
@@ -47,15 +44,19 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL) {
 
 
 
-#' Wraps text and sorts data by category
+#' Sort and wrap data by a categorical variable and numeric variable
 #'
-#' @param data a data.frame
-#' @param col_cat a character string specifying the name of the col_catumn containing categories
-#' @param order a character vector specifying the order in which categories should be sorted
-#' @param label_wrap an integer specifying the maximum number of characters per line, or NULL to disable wrapping
-#' @param new_line a character string specifying the HTML line break character to use
+#' @param data A data frame
+#' @param col_cat A character vector specifying the name of the categorical variable to sort and wrap by.
+#' @param col_num A character vector specifying the name of the numeric variable to sort by.
+#' @param order A vector specifying the order of the categories.
+#' @param label_wrap An integer specifying the width of the wrapped label.
+#' @param new_line A string that will be used to replace newline characters.
+#' @param sort A character vector that specifies the sorting order.
 #'
-#' @return a data.frame with wrapped text and sorted categories
+#' @return A data frame sorted and/or wrapped by col_cat and/or col_num.
+#'
+#' @export
 wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
                            label_wrap = NULL, new_line = "<br/>", sort = NULL) {
 

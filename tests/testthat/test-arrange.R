@@ -22,8 +22,13 @@ test_that("Sort numeric and categorical var", {
 
 
 
-  wrap_sort_data(data, col_cat = "cut", order = NULL)
-  xx <- wrap_sort_data(data, col_cat = "cut", order = c("Good", "Idea"))
+  data_result <- wrap_sort_data(data, col_cat = "cut", order = NULL)
+  expect_equal(data_result, data)
 
-  wrap_sort_data(data, col_cat = "cut", order = NULL, label_wrap = 2)
+  data_result <- wrap_sort_data(data, col_cat = "cut", order = c("Good", "Ideal"))
+  data_expect <- c("Good", "Ideal")
+  expect_equal(as.character(unique(data_result$cut)[1:2]), data_expect)
+
+
+  #wrap_sort_data(data, col_cat = "cut", order = NULL, label_wrap = 2)
 })

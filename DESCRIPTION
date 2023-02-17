@@ -10,8 +10,11 @@ Imports:
     dplyr,
     glue,
     htmltools,
+    paletero,
     purrr,
-    rlang
+    rlang,
+    stringr,
+    tidyr
 Suggests: 
     ggplot2,
     testthat (>= 3.0.0)
