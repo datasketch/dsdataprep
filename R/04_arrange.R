@@ -34,10 +34,10 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL) {
     }
     if (sort == "desc") {
       data <- data |>
-        dplyr::arrange(desc(across(all_of(col_num))), .by_group = is.null(col_cat) == FALSE)
+        arrange(desc(across(all_of(col_num))), .by_group = is.null(col_cat) == FALSE)
     } else {
       data <- data |>
-        dplyr::arrange(across(all_of(col_num)), .by_group = is.null(col_cat) == FALSE)
+        arrange(across(all_of(col_num)), .by_group = is.null(col_cat) == FALSE)
     }
 
   }
