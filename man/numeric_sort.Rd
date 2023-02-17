@@ -4,7 +4,14 @@
 \alias{numeric_sort}
 \title{Sorts a data frame by a numeric column.}
 \usage{
-numeric_sort(data, col_num, col_cat = NULL, sort = NULL)
+numeric_sort(
+  data,
+  col_num,
+  col_cat = NULL,
+  sort = NULL,
+  slice_n = NULL,
+  intra_cat = TRUE
+)
 }
 \arguments{
 \item{data}{a data frame to sort.}
@@ -14,6 +21,10 @@ numeric_sort(data, col_num, col_cat = NULL, sort = NULL)
 \item{col_cat}{the name of the categorical column(s) to group by before sorting.}
 
 \item{sort}{the order to sort the data frame in (either "asc" or "desc").}
+
+\item{slice_n}{an integer indicating the number of top rows to keep for each group}
+
+\item{intra_cat}{a boolean indicating whether to slice within each category or across all categories}
 }
 \value{
 the sorted data frame.

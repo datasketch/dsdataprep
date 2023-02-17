@@ -11,7 +11,9 @@ wrap_sort_data(
   order = NULL,
   label_wrap = NULL,
   new_line = "<br/>",
-  sort = NULL
+  sort = NULL,
+  slice_n = NULL,
+  intra_cat = TRUE
 )
 }
 \arguments{
@@ -28,6 +30,10 @@ wrap_sort_data(
 \item{new_line}{A string that will be used to replace newline characters.}
 
 \item{sort}{A character vector that specifies the sorting order.}
+
+\item{slice_n}{an integer indicating the number of top rows to keep for each group}
+
+\item{intra_cat}{a boolean indicating whether to slice within each category or across all categories}
 }
 \value{
 A data frame sorted and/or wrapped by col_cat and/or col_num.

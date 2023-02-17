@@ -7,13 +7,16 @@
 #' @param col_num the name of the numeric column to sort by.
 #' @param col_cat the name of the categorical column(s) to group by before sorting.
 #' @param sort the order to sort the data frame in (either "asc" or "desc").
+#' @param slice_n an integer indicating the number of top rows to keep for each group
+#' @param intra_cat a boolean indicating whether to slice within each category or across all categories
 #'
 #' @return the sorted data frame.
 #'
 #' @import dplyr
 #' @importFrom tidyr all_of
 #' @keywords internal
-numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL) {
+numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL,
+                         slice_n = NULL, intra_cat = TRUE) {
 
   if (is.null(data)) {
     stop("The data object must be specified")
@@ -36,7 +39,13 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL) {
       data <- data |>
         arrange(across(all_of(col_num)), .by_group = is.null(col_cat) == FALSE)
     }
+  }
 
+  if (!is.null(slice_n)) {
+    if (!intra_cat) {
+      data <- data |> ungroup()
+    }
+    data <- data |> slice_head(n = slice_n)
   }
 
   data
@@ -53,12 +62,15 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL) {
 #' @param label_wrap An integer specifying the width of the wrapped label.
 #' @param new_line A string that will be used to replace newline characters.
 #' @param sort A character vector that specifies the sorting order.
+#' @param slice_n an integer indicating the number of top rows to keep for each group
+#' @param intra_cat a boolean indicating whether to slice within each category or across all categories
 #'
 #' @return A data frame sorted and/or wrapped by col_cat and/or col_num.
 #'
 #' @export
 wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
-                           label_wrap = NULL, new_line = "<br/>", sort = NULL) {
+                           label_wrap = NULL, new_line = "<br/>", sort = NULL,
+                           slice_n = NULL, intra_cat = TRUE) {
 
   if (is.null(data)) {
     stop("The data object must be specified")
@@ -66,7 +78,9 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
 
   if (!is.null(col_num)) {
     if (!is.null(sort)) {
-      data <- data |> numeric_sort(sort = sort)
+      data <- data |> numeric_sort(col_num, col_cat, sort = sort,
+                                   slice_n = slice_n, intra_cat = intra_cat
+                                   )
     }
   }
 
