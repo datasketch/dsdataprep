@@ -4,7 +4,7 @@
 \alias{add_data_tooltip}
 \title{Add tooltips to data columns in a data frame}
 \usage{
-add_data_tooltip(data, nms = NULL, tooltip = NULL)
+add_data_tooltip(data, nms = NULL, tooltip = NULL, dic = NULL)
 }
 \arguments{
 \item{data}{A data frame to which tooltips will be added}
@@ -12,6 +12,8 @@ add_data_tooltip(data, nms = NULL, tooltip = NULL)
 \item{nms}{A named character vector containing the labels for the data columns}
 
 \item{tooltip}{A tooltip template}
+
+\item{dic}{optional dic}
 }
 \value{
 A copy of the input data frame with tooltips added to each data column

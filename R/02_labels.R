@@ -66,6 +66,7 @@ labels_map <- function(nms, tooltip = NULL) {
 #' @param data A data frame to which tooltips will be added
 #' @param nms A named character vector containing the labels for the data columns
 #' @param tooltip A tooltip template
+#' @param dic optional dic
 #' @return A copy of the input data frame with tooltips added to each data column
 #' @export
 #' @import dplyr
@@ -89,11 +90,15 @@ labels_map <- function(nms, tooltip = NULL) {
 #'
 #' # View the result
 #' print(data_with_tooltip)
-add_data_tooltip <- function(data, nms = NULL, tooltip = NULL) {
+add_data_tooltip <- function(data, nms = NULL, tooltip = NULL, dic = NULL) {
   if (is.null(data)) stop("The data object must be specified")
   class_data <- class(data)
   if ("fringe" %in% class_data) data <- data$data
+
   col_names <- grep("^[^nms]|^[^tooltip]", names(data), value = TRUE)
+  if (is.null(nms)) {
+    nms <- create_nms(data_names = names(data), dic = dic)
+  }
   if (length(col_names) == 0) {
     warning("No data columns found; returning original data")
     return(data)
