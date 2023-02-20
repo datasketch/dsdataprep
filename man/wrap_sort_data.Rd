@@ -13,7 +13,8 @@ wrap_sort_data(
   new_line = "<br/>",
   sort = NULL,
   slice_n = NULL,
-  intra_cat = TRUE
+  intra_cat = TRUE,
+  index_names = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ wrap_sort_data(
 \item{slice_n}{an integer indicating the number of top rows to keep for each group}
 
 \item{intra_cat}{a boolean indicating whether to slice within each category or across all categories}
+
+\item{index_names}{the name(s) of the new(s) index column(s)}
 }
 \value{
 A data frame sorted and/or wrapped by col_cat and/or col_num.

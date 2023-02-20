@@ -51,6 +51,30 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL,
   data
 }
 
+#' Add group index to a data frame based on specified group columns
+#' @keywords internal
+add_group_index <- function(data, group_cols, index_cols = NULL) {
+
+  if (is.null(index_cols)) {
+    index_cols <- paste0("index_", group_cols)
+  }
+
+  for (i in seq_along(group_cols)) {
+    # Convert the group column to factor with the levels in the order they appear in the data
+    levels <- unique(data[[group_cols[i]]])
+    data[[group_cols[i]]] <- factor(data[[group_cols[i]]], levels = levels)
+
+    # Add the index column by group
+    data <- data %>%
+      group_by(!!sym(group_cols[i])) %>%
+      mutate(!!sym(index_cols[i]) := cur_group_id() - 1) %>%
+      ungroup()
+  }
+
+  # Return the modified data frame
+  data
+}
+
 
 
 #' Sort and wrap data by a categorical variable and numeric variable
@@ -64,17 +88,23 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL,
 #' @param sort A character vector that specifies the sorting order.
 #' @param slice_n an integer indicating the number of top rows to keep for each group
 #' @param intra_cat a boolean indicating whether to slice within each category or across all categories
+#' @param index_names the name(s) of the new(s) index column(s)
 #'
 #' @return A data frame sorted and/or wrapped by col_cat and/or col_num.
 #'
 #' @export
 wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
                            label_wrap = NULL, new_line = "<br/>", sort = NULL,
-                           slice_n = NULL, intra_cat = TRUE) {
+                           slice_n = NULL, intra_cat = TRUE, index_names = NULL) {
 
   if (is.null(data)) {
     stop("The data object must be specified")
   }
+
+  class_data <- class(data)
+
+  if ("fringe" %in% class_data) data <- data$data
+
 
   if (!is.null(col_num)) {
     if (!is.null(sort)) {
@@ -97,6 +127,12 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
       order <- c(order, unique_vals[!is.na(unique_vals)])
       data <- data[order(match(data[[col_cat]], order)), ]
     }
+
+
+    if (!is.null(index_names)) {
+    data <- add_group_index(data, col_cat, index_names)
+    }
+
 
     if (!is.null(label_wrap)) {
       data[[col_cat]] <- data[[col_cat]] |> stringr::str_wrap(width = label_wrap) |>

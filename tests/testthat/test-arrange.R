@@ -30,5 +30,12 @@ test_that("Sort numeric and categorical var", {
   expect_equal(as.character(unique(data_result$cut)[1:2]), data_expect)
 
 
-  #wrap_sort_data(data, col_cat = "cut", order = NULL, label_wrap = 2)
+  data_result <- add_group_index(data, c("cut", "color"), c("index", "index_leng"))
+  expect_equal(names(data_result), c(names(data), c("index", "index_leng")))
+
+  # data_result <- wrap_sort_data(data, col_cat = "cut",
+  #                               order = c("Good", "Ideal"),
+  #                               index_names = c("index"))
+
+
 })
