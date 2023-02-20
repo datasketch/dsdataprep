@@ -99,7 +99,7 @@ add_data_tooltip <- function(data, nms = NULL, tooltip = NULL) {
     return(data)
   }
   data %>%
-    mutate(labels = glue::glue(
+    mutate(..labels = glue::glue(
      labels_map(nms = nms, tooltip = tooltip)) %>%
         lapply(htmltools::HTML)
     )

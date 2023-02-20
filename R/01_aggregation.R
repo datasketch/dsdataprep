@@ -49,7 +49,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
   if (is.null(group_var)) stop("The pooling variable(s) must be specified.")
 
   class_data <- class(data)
-
+  ..percentage <- NULL
   if ("fringe" %in% class_data) data <- data$data
 
   if (agg == "count") {
@@ -58,9 +58,9 @@ aggregation_data <- function (data, agg, group_var, to_agg,
       summarise(count = n())
     if (percentage) {
       result <- result |>
-        mutate(percentage = (count / sum(count))*100)
+        mutate(..percentage = (count / sum(count))*100)
       if (!is.null(percentage_name)) {
-        result <- result |> rename(!!percentage_name := percentage)
+        result <- result |> rename(!!percentage_name := ..percentage)
       }
     }
     if (!is.null(name)) {
@@ -76,7 +76,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
     if (percentage) {
       to_percentage <- to_agg
       if (!is.null(name)) to_percentage <- name
-      if (is.null(percentage_name)) percentage_name <- paste0("percentage", name)
+      if (is.null(percentage_name)) percentage_name <- paste0("..percentage", name)
       result <- result |>
         mutate(across(all_of(to_percentage), ~ . / sum(.) * 100,
                       .names = "{percentage_name}"))

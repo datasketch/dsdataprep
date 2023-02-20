@@ -24,7 +24,7 @@ test_that("Aggregation", {
 
 
   data_expect <- data_expect |>
-    dplyr::mutate(percentage = (Conteo / sum(Conteo))*100)
+    dplyr::mutate(..percentage = (Conteo / sum(Conteo))*100)
 
   expect_equal(data_result, data_expect)
 
@@ -73,8 +73,8 @@ test_that("Aggregation", {
     dplyr::group_by(cut) |>
     dplyr::summarise(`Suma x` = sum(x, na.rm = TRUE),
                      `Suma y` = sum(y, na.rm = TRUE)) |>
-    dplyr::mutate(`percentageSuma x` = `Suma x`/sum(`Suma x`, na.rm = T) * 100,
-                  `percentageSuma y` = `Suma y`/sum(`Suma y`, na.rm = T) * 100)
+    dplyr::mutate(`..percentageSuma x` = `Suma x`/sum(`Suma x`, na.rm = T) * 100,
+                  `..percentageSuma y` = `Suma y`/sum(`Suma y`, na.rm = T) * 100)
 
 
   expect_equal(data_result, data_expect)

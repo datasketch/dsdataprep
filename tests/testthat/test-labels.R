@@ -29,6 +29,6 @@ test_that("Labels", {
   nms <- create_nms(data_names = names(data)[1])
   data_result <- add_data_tooltip(data = data, nms = nms)
   data_expect <- paste0("<b>carat:</b> ", data$carat)
-  expect_equal(data_result$labels |> unlist(), data_expect)
+  expect_equal(data_result$..labels |> unlist(), data_expect)
 
 })
