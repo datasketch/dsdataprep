@@ -116,17 +116,17 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
 
 
   if (!is.null(col_cat)) {
-    col_cat_class <- class(data[[col_cat]])
-    if (!any(col_cat_class %in% c("character", "factor", "hd_Cat"))) {
-      stop("col_cat must be character or factor")
-    }
-
-    if (!is.null(order)) {
-      unique_vals <- unique(data[[col_cat]])
-      order <- union(order, unique_vals[!is.na(unique_vals)])
-      order <- c(order, unique_vals[!is.na(unique_vals)])
-      data <- data[order(match(data[[col_cat]], order)), ]
-    }
+    # col_cat_class <- class(data[[col_cat]])
+    # if (!any(col_cat_class %in% c("character", "factor", "hd_Cat"))) {
+    #   stop("col_cat must be character or factor")
+    # }
+    #
+    # if (!is.null(order)) {
+    #   unique_vals <- unique(data[[col_cat]])
+    #   order <- union(order, unique_vals[!is.na(unique_vals)])
+    #   order <- c(order, unique_vals[!is.na(unique_vals)])
+    #   data <- data[order(match(data[[col_cat]], order)), ]
+    # }
 
 
     if (!is.null(index_names)) {
@@ -134,12 +134,12 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
     }
 
 
-    if (!is.null(label_wrap)) {
-      data[[col_cat]] <- data[[col_cat]] |> stringr::str_wrap(width = label_wrap) |>
-        stringr::str_replace_all(pattern = "\\\n",
-                                 replacement = new_line)
-
-    }
+    # if (!is.null(label_wrap)) {
+    #   data[[col_cat]] <- data[[col_cat]] |> stringr::str_wrap(width = label_wrap) |>
+    #     stringr::str_replace_all(pattern = "\\\n",
+    #                              replacement = new_line)
+    #
+    # }
   }
   data
 }

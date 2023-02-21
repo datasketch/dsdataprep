@@ -1,25 +1,3 @@
-#' @import dplyr
-#' @importFrom rlang :=
-
-
-
-# es una funcion que es ejecutada por do.call puede ser sum, mean, max, min, sd, etc
-#' @keywords internal
-aggregation <- function(aggregation, ...) {
-  if (is.null(aggregation) || is.na(aggregation)) {
-    stop("The aggregation type must be specified.")
-  }
-
-  result <- do.call(aggregation, c(list(...), list(na.rm = TRUE)))
-
-  if (is.na(result)) {
-    stop("The aggregation failed.")
-  }
-
-  return(result)
-}
-
-
 #' Aggregate data by group and perform various summary operations
 #'
 #' This function aggregates data by a specified grouping variable or variables
@@ -33,17 +11,28 @@ aggregation <- function(aggregation, ...) {
 #' @param name A character vector of new names for the summary variables
 #' @param percentage A logical value indicating whether to calculate percentages
 #' @param percentage_name A character vector of new names for percentage columns
+#' @param extra_col A logical value indicating whether to include an additional column in the output data frame containing the concatenated values of any factor or character columns.
+#' @param agg_extra A character string indicating the aggregation function to use for the additional column if \code{extra_col} is \code{TRUE}. Options include "sum", "mean", "median", "min", "max", "count", and "n_distinct".
 #'
-#' @return A data frame containing the aggregated data and summary statistics
+#' @return A data frame containing the aggregated data.
+#'
+#' @import dplyr
+#' @importFrom rlang :=
 #' @export
 #'
 #' @examples
 #' data(mtcars)
-#' aggregation_data(mtcars, "mean", c("cyl", "gear"), c("mpg", "hp"))
-#' @export
+#' aggregation_data(mtcars, "mean", c("cyl", "gear"), c("mpg", "disp"))
+#'
+#' @seealso
+#' \code{\link{summarize_all}}, \code{\link{group_by}}, \code{\link{across}}
+#'
+#' @family dplyr functions
+
 aggregation_data <- function (data, agg, group_var, to_agg,
                               name = NULL, percentage = FALSE,
-                              percentage_name = NULL) {
+                              percentage_name = NULL,
+                              extra_col = FALSE, agg_extra = "sum") {
 
   if (is.null(data)) stop("The data object must be specified")
   if (is.null(group_var)) stop("The pooling variable(s) must be specified.")
@@ -51,6 +40,16 @@ aggregation_data <- function (data, agg, group_var, to_agg,
   class_data <- class(data)
   ..percentage <- NULL
   if ("fringe" %in% class_data) data <- data$data
+
+  if (extra_col) {
+
+    extra_data <- data |>
+      group_by(across(all_of(group_var))) |>
+      summarise(across(where(is.numeric), ~ aggregation(agg_extra, .x), .names = "{.col}"),
+                across(where(~ is.factor(.x) | is.character(.x)), ~ paste_vector(.x), .names = "{.col}"))
+
+  }
+
 
   if (agg == "count") {
     result <- data |>
@@ -82,6 +81,10 @@ aggregation_data <- function (data, agg, group_var, to_agg,
                       .names = "{percentage_name}"))
     }
 
+  }
+
+  if (extra_col) {
+    result <- result |> left_join(extra_data)
   }
 
   result

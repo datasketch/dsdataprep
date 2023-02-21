@@ -11,7 +11,9 @@ aggregation_data(
   to_agg,
   name = NULL,
   percentage = FALSE,
-  percentage_name = NULL
+  percentage_name = NULL,
+  extra_col = FALSE,
+  agg_extra = "sum"
 )
 }
 \arguments{
@@ -28,9 +30,13 @@ aggregation_data(
 \item{percentage}{A logical value indicating whether to calculate percentages}
 
 \item{percentage_name}{A character vector of new names for percentage columns}
+
+\item{extra_col}{A logical value indicating whether to include an additional column in the output data frame containing the concatenated values of any factor or character columns.}
+
+\item{agg_extra}{A character string indicating the aggregation function to use for the additional column if \code{extra_col} is \code{TRUE}. Options include "sum", "mean", "median", "min", "max", "count", and "n_distinct".}
 }
 \value{
-A data frame containing the aggregated data and summary statistics
+A data frame containing the aggregated data.
 }
 \description{
 This function aggregates data by a specified grouping variable or variables
@@ -39,5 +45,10 @@ Supported summary operations include count, sum, mean, and more.
 }
 \examples{
 data(mtcars)
-aggregation_data(mtcars, "mean", c("cyl", "gear"), c("mpg", "hp"))
+aggregation_data(mtcars, "mean", c("cyl", "gear"), c("mpg", "disp"))
+
 }
+\seealso{
+\code{\link{summarize_all}}, \code{\link{group_by}}, \code{\link{across}}
+}
+\concept{dplyr functions}
