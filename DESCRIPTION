@@ -8,14 +8,15 @@ Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Imports: 
     dplyr,
+    dstools,
     glue,
-    htmltools,
+    lubridate,
+    makeup,
     paletero,
     purrr,
     rlang,
     stringr,
-    tidyr,
-    dstools
+    tidyr
 Suggests: 
     ggplot2,
     testthat (>= 3.0.0)

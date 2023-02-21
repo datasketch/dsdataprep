@@ -15,6 +15,8 @@
 #'
 #' @return A data frame sorted and/or wrapped by col_cat and/or col_num.
 #'
+#' @importFrom purrr map
+#'
 #' @export
 wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
                            label_wrap = NULL, new_line = "<br/>", sort = NULL,
