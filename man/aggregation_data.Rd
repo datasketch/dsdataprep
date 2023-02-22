@@ -9,7 +9,7 @@ aggregation_data(
   agg,
   group_var,
   to_agg,
-  name = NULL,
+  agg_name = NULL,
   percentage = FALSE,
   percentage_name = NULL,
   extra_col = FALSE,
@@ -25,7 +25,7 @@ aggregation_data(
 
 \item{to_agg}{A character vector of variable names to summarize}
 
-\item{name}{A character vector of new names for the summary variables}
+\item{agg_name}{A character vector of new names for the summary variables}
 
 \item{percentage}{A logical value indicating whether to calculate percentages}
 

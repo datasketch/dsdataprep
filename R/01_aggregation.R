@@ -8,7 +8,7 @@
 #' @param agg The type of aggregation to perform (e.g., "count", "sum", "mean")
 #' @param group_var A character vector of variable names to group by
 #' @param to_agg A character vector of variable names to summarize
-#' @param name A character vector of new names for the summary variables
+#' @param agg_name A character vector of new names for the summary variables
 #' @param percentage A logical value indicating whether to calculate percentages
 #' @param percentage_name A character vector of new names for percentage columns
 #' @param extra_col A logical value indicating whether to include an additional column in the output data frame containing the concatenated values of any factor or character columns.
@@ -30,7 +30,7 @@
 #' @family dplyr functions
 
 aggregation_data <- function (data, agg, group_var, to_agg,
-                              name = NULL, percentage = FALSE,
+                              agg_name = NULL, percentage = FALSE,
                               percentage_name = NULL,
                               extra_col = FALSE, agg_extra = "sum") {
 
@@ -62,20 +62,20 @@ aggregation_data <- function (data, agg, group_var, to_agg,
         result <- result |> rename(!!percentage_name := ..percentage)
       }
     }
-    if (!is.null(name)) {
-      result <- result |> rename(!!name := count)
+    if (!is.null(agg_name)) {
+      result <- result |> rename(!!agg_name := count)
     }
   } else {
     result <- data |>
       group_by(across(all_of(group_var))) |>
       summarise(across(all_of(to_agg),
-                       ~ aggregation(agg, .x),
-                       .names = ifelse(is.null(name), "{.col}", "{name}")))
+                       ~ aggregation(agg, as.numeric(.x)),
+                       .names = ifelse(is.null(agg_name), "{.col}", "{agg_name}")))
 
     if (percentage) {
       to_percentage <- to_agg
-      if (!is.null(name)) to_percentage <- name
-      if (is.null(percentage_name)) percentage_name <- paste0("..percentage", name)
+      if (!is.null(agg_name)) to_percentage <- agg_name
+      if (is.null(percentage_name)) percentage_name <- paste0("..percentage", agg_name)
       result <- result |>
         mutate(across(all_of(to_percentage), ~ . / sum(.) * 100,
                       .names = "{percentage_name}"))

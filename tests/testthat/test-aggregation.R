@@ -5,7 +5,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                  agg = "count",
                                  to_agg = NULL,
-                                 name = "Conteo",
+                                 agg_name = "Conteo",
                                  group_var = c("cut", "color"))
 
   data_expect <- data |>
@@ -18,7 +18,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                   agg = "count",
                                   to_agg = NULL,
-                                  name = "Conteo",
+                                  agg_name = "Conteo",
                                   group_var = c("cut", "color"),
                                   percentage = TRUE)
 
@@ -33,7 +33,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                   agg = "count",
                                   to_agg = NULL,
-                                  name = "Conteo",
+                                  agg_name = "Conteo",
                                   group_var = c("cut", "color"),
                                   percentage = TRUE,
                                   percentage_name = "Porcentaje")
@@ -50,7 +50,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                  agg = "sum",
                                  to_agg = c("x", "y"),
-                                 name = c("Suma x", "Suma y"),
+                                 agg_name = c("Suma x", "Suma y"),
                                  group_var = c("cut"))
 
   data_expect <- data |>
@@ -65,7 +65,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                   agg = "sum",
                                   to_agg = c("x", "y"),
-                                  name = c("Suma x", "Suma y"),
+                                  agg_name = c("Suma x", "Suma y"),
                                   group_var = c("cut"),
                                   percentage = TRUE)
 
@@ -85,7 +85,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                   agg = "sum",
                                   to_agg = c("x", "y"),
-                                  name = NULL,
+                                  agg_name = NULL,
                                   group_var = c("cut"))
 
   data_expect <- data |>
@@ -102,7 +102,7 @@ test_that("Aggregation", {
   data_result <- aggregation_data(data = data,
                                  agg = "mean",
                                  to_agg = "x",
-                                 name = "Promedio",
+                                 agg_name = "Promedio",
                                  group_var = c("clarity", "cut"))
 
   data_expect <- data |>
@@ -111,4 +111,11 @@ test_that("Aggregation", {
 
   expect_equal(data_result, data_expect)
 
+  data <- data.frame(name = c("D", "E", "F"), y = c(15, 25, 35))
+  data_result <- aggregation_data(data = data,
+                                  agg = "sum",
+                                  to_agg = "y",
+                                  group_var = "name")
+
+  expect_equal(data_result, data, ignore_attr = TRUE)
 })
