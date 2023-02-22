@@ -46,7 +46,7 @@ prep_tooltip <- function(data, tooltip = NULL, new_labels = NULL,
 
   if (!is.null(format_num)) {
     data <- data |>
-      mutate(across(where(is.numeric),
+      mutate(across(where(~ is.numeric(.x) | is.integer(.x)),
                     ~ makeup::makeup_num(.x,
                                          sample = format_num,
                                          prefix = opts_format_num$prefix %||% "",

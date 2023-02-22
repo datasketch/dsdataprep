@@ -46,10 +46,11 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL,
   }
 
   col_num_class <- class(data[[col_num]])
-  if (!(col_num_class %in% c("numeric"))) {
+  if (!(col_num_class %in% c("numeric", "integer"))) {
     stop("col_num must be numeric")
   }
-
+  if (sort == "no") sort <- NULL
+  print(sort)
   if (!is.null(sort)) {
     if (!is.null(col_cat)) {
       data <- data |>

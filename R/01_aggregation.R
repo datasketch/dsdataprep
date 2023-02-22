@@ -45,7 +45,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
 
     extra_data <- data |>
       group_by(across(all_of(group_var))) |>
-      summarise(across(where(is.numeric), ~ aggregation(agg_extra, .x), .names = "{.col}"),
+      summarise(across(where(~ is.numeric(.x) | is.integer(.x)), ~ aggregation(agg_extra, .x), .names = "{.col}"),
                 across(where(~ is.factor(.x) | is.character(.x)), ~ paste_vector(.x), .names = "{.col}"))
 
   }
