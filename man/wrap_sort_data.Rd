@@ -9,7 +9,9 @@ wrap_sort_data(
   col_cat = NULL,
   col_num = NULL,
   order = NULL,
+  order_legend = NULL,
   label_wrap = NULL,
+  label_wrap_legend = NULL,
   new_line = "<br/>",
   sort = NULL,
   slice_n = NULL,
@@ -26,7 +28,11 @@ wrap_sort_data(
 
 \item{order}{A vector specifying the order of the categories.}
 
+\item{order_legend}{A vector specifying the order of the categories in legend.}
+
 \item{label_wrap}{An integer specifying the width of the wrapped label.}
+
+\item{label_wrap_legend}{An integer specifying the width of the wrapped legend items.}
 
 \item{new_line}{A string that will be used to replace newline characters.}
 
