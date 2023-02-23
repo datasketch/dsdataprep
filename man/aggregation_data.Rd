@@ -2,7 +2,7 @@
 % Please edit documentation in R/01_aggregation.R
 \name{aggregation_data}
 \alias{aggregation_data}
-\title{Aggregate data by group and perform various summary operations}
+\title{Aggregate data by group and perform summary operations}
 \usage{
 aggregation_data(
   data,
@@ -17,7 +17,7 @@ aggregation_data(
 )
 }
 \arguments{
-\item{data}{A data frame to be summarized}
+\item{data}{A data frame}
 
 \item{agg}{The type of aggregation to perform (e.g., "count", "sum", "mean")}
 
@@ -39,13 +39,15 @@ aggregation_data(
 A data frame containing the aggregated data.
 }
 \description{
-This function aggregates data by a specified grouping variable or variables
-and calculates summary statistics on one or more other variables in the data.
-Supported summary operations include count, sum, mean, and more.
+This function aggregates and summaries data. Supported summary operations
+includes count, sum, mean, and more.
 }
 \examples{
 data(mtcars)
-aggregation_data(mtcars, "mean", c("cyl", "gear"), c("mpg", "disp"))
+aggregation_data(data = mtcars,
+                 agg = "mean",
+                 group_var = c("cyl", "gear"),
+                 to_agg = c("mpg", "disp"))
 
 }
 \seealso{

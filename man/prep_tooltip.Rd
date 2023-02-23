@@ -20,13 +20,13 @@ prep_tooltip(
 )
 }
 \arguments{
-\item{data}{A data frame or matrix containing the data to display in the tooltip.}
+\item{data}{A data frame or matrix.}
 
 \item{tooltip}{An optional tooltip template string that specifies how to format the data for display. If not specified, a default template will be created based on the column names of the data frame.}
 
 \item{new_labels}{An optional named character vector of column labels to use in the tooltip. If specified, the column labels in the tooltip will be replaced with the new labels.}
 
-\item{engine}{A character string specifying the templating engine to use. Currently supported options include "html", "markdown", and "latex".}
+\item{engine}{A character string specifying the templating engine to use. Currently supported options include "html", "markdown" and "latex".}
 
 \item{as_df}{A logical value indicating whether to return the tooltip strings as a new column in the input data frame. If \code{FALSE} (the default), the tooltip strings will be returned as a character vector.}
 
