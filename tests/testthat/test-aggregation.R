@@ -118,4 +118,17 @@ test_that("Aggregation", {
                                   group_var = "name")
 
   expect_equal(data_result, data, ignore_attr = TRUE)
+
+
+  # dates <- seq(as.POSIXct("2022-01-01"), as.POSIXct("2022-01-10"), by = "day")
+  # values <- rnorm(length(dates))
+  # data <- data.frame(date = dates, value = values)
+  # data_result <- aggregation_data(data = data,
+  #                                 agg = "sum",
+  #                                 to_agg = "value",
+  #                                 group_var = "date")
+
+
+
+
 })

@@ -51,7 +51,7 @@ add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualita
       }
     }
     class_palette_colors <- class(palette_colors)
-    if (is.character(class_palette_colors)) {
+
       length_colors <- length(palette_colors)
       if (length_colors != length_column_color) {
         if (length_colors == 1) {
@@ -71,10 +71,7 @@ add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualita
       data_colors[[color_by]] <- column_color
       data <- data |>
         left_join(data_colors, by = color_by)
-    } else {
-      data <- data |>
-        left_join(palette_colors, by = color_by)
-    }
+
   }
   data
 }
