@@ -24,11 +24,20 @@ create_default_tpl <- function(data_names, new_labels = NULL,
   vars <- data_names
   names(vars) <- new_labels
 
-  collapse_symbol <- case_when(
-    engine == "html" ~ "<br/>",
-    engine == "markdown" ~ "\n\n",
-    .default = "\n"
-  )
+  # collapse_symbol <- case_when(
+  #   engine == "html" ~ "<br/>",
+  #   engine == "markdown" ~ "\n\n",
+  #   .default = "\n"
+  # )
+
+  if(engine == "html"){
+    collapse_symbol <- "<br/>"
+  } else if(engine == "mardown"){
+    collapse_symbol <- "\n\n"
+  } else {
+    collapse_symbol <- "\n"
+  }
+
 
   f_html <- function(x, nm){
     paste0("<b>",nm, ":</b> {", x, "}")
