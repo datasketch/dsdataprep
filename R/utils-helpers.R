@@ -24,19 +24,11 @@ create_default_tpl <- function(data_names, new_labels = NULL,
   vars <- data_names
   names(vars) <- new_labels
 
-  # collapse_symbol <- dplyr::case_when(
-  #   engine == "html" ~ "<br/>",
-  #   engine == "markdown" ~ "\n\n",
-  #   .default = "\n"
-  # )
-
-  if(engine == "html"){
-    collapse_symbol <- "<br/>"
-  } else if(engine == "markdown"){
-    collapse_symbol <- "\n\n"
-  } else {
-    collapse_symbol <- "\n"
-  }
+  collapse_symbol <- dplyr::case_when(
+    engine == "html" ~ "<br/>",
+    engine == "markdown" ~ "\n\n",
+    .default = "\n"
+  )
 
 
   f_html <- function(x, nm){
