@@ -11,9 +11,19 @@
 ## Overview
 
 dsdataprep helps assisting data visualization packages by offering
-functions to aggregate, summary, sort and wrap data; adds color to the
-data columns and add-display information about rows in a dataframe or
-homodatum::fringe when plotting data.
+functions to aggregate, summarise, sort and wrap data; adds color to the
+data columns and adds rows information for displaying in interactive
+plots
+
+### Main functions:
+
+- `data_aggregation()`
+
+- `wrap_sort_data()`
+
+- `prep_tooltip()`
+
+- `add_data_colors()`
 
 ## Installation
 
@@ -44,8 +54,10 @@ options.
 #### Counting values
 
 ``` r
+# Load data
 data <- ggplot2::diamonds
 
+# Aggregate
 data_result <- aggregation_data(data = data,
                                  agg = "count",
                                  to_agg = NULL,
@@ -89,6 +101,55 @@ data_result
 #> 3 Very Good  69359.  69713.               22.4                22.5 
 #> 4 Premium    82386.  81986.               26.7                26.5 
 #> 5 Ideal     118691. 118963.               38.4                38.5
+```
+
+### Sort and wrap data by a categorical variable and numeric variable with `wrap_sort_data()`:
+
+``` r
+# Load data
+data <- ggplot2::diamonds
+
+# Checking
+data[!duplicated(data$cut), "cut"]
+#> # A tibble: 5 × 1
+#>   cut      
+#>   <ord>    
+#> 1 Ideal    
+#> 2 Premium  
+#> 3 Good     
+#> 4 Very Good
+#> 5 Fair
+
+
+# Sort data
+data_result <- wrap_sort_data(data, 
+                              col_cat = "cut", 
+                              order = c("Good", "Ideal"))
+
+# Checking
+data_result[!duplicated(data_result$cut), "cut"]
+#> # A tibble: 5 × 1
+#>   cut      
+#>   <ord>    
+#> 1 Good     
+#> 2 Ideal    
+#> 3 Premium  
+#> 4 Very Good
+#> 5 Fair
+```
+
+### Generate a tooltip string for each row of a data frame or matrix with `prep_tooltip()`. Tooltips are typically used to display additional information about the data when the user hovers over a data point in a plot or table:
+
+``` r
+# Load data
+data <- ggplot2::diamonds
+
+# Add tooltip
+v <- prep_tooltip(data,
+                    format_num = "1345.78",
+                    opts_format_num = list(si_prefix = TRUE),
+                    format_cat = "UPPER",
+                    tooltip = "Precio: {price} <br/> Tipo: {cut}")
 ```
 
 Learn about the many ways to work with formatting dates values in
