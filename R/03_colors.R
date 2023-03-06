@@ -40,10 +40,12 @@ add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualita
     return(data)
   } else {
     if (is.null(color_by)) {
-      stop("You must specify the column you want to assign color")
-    }
+      column_color <- NULL
+      length_column_color <- 1
+    } else {
     column_color <- unique(data[[color_by]])
     length_column_color <- length(column_color)
+    }
     if (is.null(palette_colors)) {
       if (!is.null(palette)) {
         palette_colors <- suppressWarnings(
@@ -67,11 +69,14 @@ add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualita
         }
       }
 
+      if (is.null(column_color)) {
+       data$..colors <- palette_colors
+      } else {
       data_colors  <- data.frame(..colors = palette_colors)
       data_colors[[color_by]] <- column_color
       data <- data |>
         left_join(data_colors, by = color_by)
-
+      }
   }
   data
 }
