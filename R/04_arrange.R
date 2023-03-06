@@ -35,6 +35,7 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
 
 
   if (!is.null(col_num)) {
+    if (sort == "no") sort <- NULL
     if (!is.null(sort)) {
       data <- data |> numeric_sort(col_num, col_cat, sort = sort,
                                    slice_n = slice_n, intra_cat = intra_cat
