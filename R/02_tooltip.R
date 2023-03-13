@@ -2,10 +2,10 @@
 #'
 #' This function generates a tooltip string for each row of a data frame or matrix. Tooltips are typically used to display additional information about the data when the user hovers over a data point in a plot or table.
 #'
-#' @param data A data frame or matrix containing the data to display in the tooltip.
+#' @param data A data frame or matrix.
 #' @param tooltip An optional tooltip template string that specifies how to format the data for display. If not specified, a default template will be created based on the column names of the data frame.
 #' @param new_labels An optional named character vector of column labels to use in the tooltip. If specified, the column labels in the tooltip will be replaced with the new labels.
-#' @param engine A character string specifying the templating engine to use. Currently supported options include "html", "markdown", and "latex".
+#' @param engine A character string specifying the templating engine to use. Currently supported options include "html", "markdown" and "latex".
 #' @param as_df A logical value indicating whether to return the tooltip strings as a new column in the input data frame. If \code{FALSE} (the default), the tooltip strings will be returned as a character vector.
 #' @param na_row_default_column An optional character string specifying the name of a column to use as the default value when all other columns in a row are \code{NA}. If specified, the values in this column will be used as the default tooltip value. If not specified, \code{na_row_default_value} will be used instead.
 #' @param na_row_default_value An optional character string to use as the default tooltip value when all columns in a row are \code{NA}. If \code{NULL} (the default), the string "(NA)" will be used.

@@ -4,12 +4,12 @@
 \name{dsdataprep-package}
 \alias{dsdataprep}
 \alias{dsdataprep-package}
-\title{dsdataprep: What the Package Does (One Line, Title Case)}
+\title{dsdataprep: Data preparation}
 \description{
-What the package does (one paragraph).
+dsdataprep helps manipulationdata by offering functions to aggregate, summarise, sort and wrap data; adds color to the data columns and adds rows information for displaying in interactive plots.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Camila Achuri \email{camila@randommonkey.io}
 
 }
 \keyword{internal}

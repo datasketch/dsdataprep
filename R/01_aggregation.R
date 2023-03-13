@@ -1,10 +1,9 @@
-#' Aggregate data by group and perform various summary operations
+#' Aggregate data by group and perform summary operations
 #'
-#' This function aggregates data by a specified grouping variable or variables
-#' and calculates summary statistics on one or more other variables in the data.
-#' Supported summary operations include count, sum, mean, and more.
+#' This function aggregates and summaries data. Supported summary operations
+#' includes count, sum, mean, and more.
 #'
-#' @param data A data frame to be summarized
+#' @param data A data frame
 #' @param agg The type of aggregation to perform (e.g., "count", "sum", "mean")
 #' @param group_var A character vector of variable names to group by
 #' @param to_agg A character vector of variable names to summarize
@@ -22,7 +21,10 @@
 #'
 #' @examples
 #' data(mtcars)
-#' aggregation_data(mtcars, "mean", c("cyl", "gear"), c("mpg", "disp"))
+#' aggregation_data(data = mtcars,
+#'                  agg = "mean",
+#'                  group_var = c("cyl", "gear"),
+#'                  to_agg = c("mpg", "disp"))
 #'
 #' @seealso
 #' \code{\link{summarize_all}}, \code{\link{group_by}}, \code{\link{across}}

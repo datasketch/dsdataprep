@@ -7,7 +7,9 @@ test_that("Add colors", {
 
 
   colors <- '#3a3766'
-  data_result <- add_data_colors(data, palette_colors = colors, color_by = "clarity")
+  data_result <- add_data_colors(data,
+                                 palette_colors = colors,
+                                 color_by = "clarity")
   expect_equal(unique(data_result$..colors), colors)
 
   data <- data |> select(carat, x)
