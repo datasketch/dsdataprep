@@ -84,6 +84,7 @@ prep_tooltip <- function(data, tooltip = NULL, new_labels = NULL,
   }
 
   if (as_df) {
+    names(data) <- gsub("\\.\\.", " ", names(data))
     data$..tooltip <- as.character(v)
     return(data)
   }

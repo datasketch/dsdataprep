@@ -70,7 +70,7 @@ test_that("Tooltips work", {
 
   data <- iris
   names(data) <- gsub("\\.", " ", names(data))
-  v <- prep_tooltip(data)
+  v <- prep_tooltip(data, as_df = TRUE)
 
 
 })
