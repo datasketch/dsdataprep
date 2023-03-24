@@ -29,9 +29,11 @@ prep_tooltip <- function(data, tooltip = NULL, new_labels = NULL,
                          format_date = NULL
 ){
 
+  names(data) <- gsub(" ", "..", names(data))
 
   if(is.null(tooltip)){
     d <- data
+
     if(!is.null(na_row_default_column)){
       d[[na_row_default_column]] <- NULL
     }
@@ -69,7 +71,7 @@ prep_tooltip <- function(data, tooltip = NULL, new_labels = NULL,
 
 
   if (!has_all_na_rows(data, cols = used_vars)){
-    v <- glue::glue_data(data, tooltip, .na = na_label)
+    v <- glue::glue_data(data, tooltip, .na = na_label, .trim = F)
   } else {
     all_nas_idx <- which_all_na_rows(data, cols = used_vars)
     if (!is.null(na_row_default_column)){

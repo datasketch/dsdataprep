@@ -67,4 +67,10 @@ test_that("Tooltips work", {
                "Precio: 2.76K <br/> Tipo: PREMIUM"
   )
 
+
+  data <- iris
+  names(data) <- gsub("\\.", " ", names(data))
+  v <- prep_tooltip(data)
+
+
 })

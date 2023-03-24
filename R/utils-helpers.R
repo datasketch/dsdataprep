@@ -49,9 +49,10 @@ create_default_tpl <- function(data_names, new_labels = NULL,
   render_fun <-  fs[[engine]]
   if(is.null(render_fun)) render_fun <- f_txt
 
-  tooltip <- purrr::imap(as.list(vars), ~ render_fun(.x, .y)) |>
+  tooltip <- purrr::imap(as.list(vars), ~ render_fun(.x, gsub("\\.\\.", " ",.y))) |>
     unlist() |>
     paste(collapse = collapse_symbol)
+
   tooltip
 
 }
