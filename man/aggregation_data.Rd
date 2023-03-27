@@ -13,7 +13,8 @@ aggregation_data(
   percentage = FALSE,
   percentage_name = NULL,
   extra_col = FALSE,
-  agg_extra = "sum"
+  agg_extra = "sum",
+  extra_sep = ","
 )
 }
 \arguments{

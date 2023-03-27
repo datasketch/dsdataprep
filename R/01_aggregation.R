@@ -34,7 +34,8 @@
 aggregation_data <- function (data, agg, group_var, to_agg,
                               agg_name = NULL, percentage = FALSE,
                               percentage_name = NULL,
-                              extra_col = FALSE, agg_extra = "sum") {
+                              extra_col = FALSE,
+                              agg_extra = "sum", extra_sep = ",") {
 
   if (is.null(data)) stop("The data object must be specified")
   if (is.null(group_var)) stop("The pooling variable(s) must be specified.")
@@ -48,7 +49,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
     extra_data <- data |>
       group_by(across(all_of(group_var))) |>
       summarise(across(where(~ is.numeric(.x) | is.integer(.x)), ~ aggregation(agg_extra, .x), .names = "{.col}"),
-                across(where(~ is.factor(.x) | is.character(.x)), ~ paste_vector(.x), .names = "{.col}"))
+                across(where(~ is.factor(.x) | is.character(.x)), ~ paste_vector(.x, extra_sep), .names = "{.col}"))
 
   }
 
