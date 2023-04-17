@@ -17,7 +17,7 @@ aggregation <- function(aggregation, ...) {
 
 #' @keywords internal
 paste_vector <- function(x, collapse = ",") {
-  paste0(trimws(unique(x)), collapse = collapse)
+  paste0(trimws(as.character(unique(x))), collapse = collapse)
 }
 
 

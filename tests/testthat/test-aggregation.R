@@ -3,10 +3,16 @@ test_that("Aggregation", {
 
   # Without percentage
   data_result <- aggregation_data(data = data,
-                                 agg = "count",
-                                 to_agg = NULL,
-                                 agg_name = "Conteo",
-                                 group_var = c("cut", "color"))
+                                 agg = "sum",
+                                 to_agg = "x",
+                                 agg_name = "x",
+                                 group_var = c("cut", "color"),
+                                 extra_col = TRUE,
+                                 extra_group = "clarity",
+                                 collapse_columns = "clarity",
+                                 numeric_collapse_columns = "y"
+                                 #agg_extra = NULL
+                                  )
 
   data_expect <- data |>
     dplyr::group_by(cut, color) |>

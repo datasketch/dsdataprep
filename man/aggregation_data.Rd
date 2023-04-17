@@ -14,7 +14,11 @@ aggregation_data(
   percentage_name = NULL,
   extra_col = FALSE,
   agg_extra = "sum",
-  extra_sep = ","
+  extra_sep = ",",
+  extra_group = NULL,
+  collapse_columns = NULL,
+  numeric_collapse_columns = NULL,
+  extra_sep_collapse_columns = "-"
 )
 }
 \arguments{

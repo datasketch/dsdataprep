@@ -35,7 +35,12 @@ aggregation_data <- function (data, agg, group_var, to_agg,
                               agg_name = NULL, percentage = FALSE,
                               percentage_name = NULL,
                               extra_col = FALSE,
-                              agg_extra = "sum", extra_sep = ",") {
+                              agg_extra = "sum",
+                              extra_sep = ",",
+                              extra_group = NULL,
+                              collapse_columns = NULL,
+                              numeric_collapse_columns = NULL,
+                              extra_sep_collapse_columns = "-") {
 
   if (is.null(data)) stop("The data object must be specified")
   if (is.null(group_var)) stop("The pooling variable(s) must be specified.")
@@ -45,10 +50,24 @@ aggregation_data <- function (data, agg, group_var, to_agg,
   if ("fringe" %in% class_data) data <- data$data
 
   if (extra_col) {
+    gv <- group_var
+    if (!is.null(extra_group)) {
+      gv <- c(gv, extra_group)
+      if (!is.null(collapse_columns)) {
+        cols <- c( "..num_add", collapse_columns)
 
+        extra_collapse <- data |>
+          group_by(across(all_of(gv))) |>
+          summarise(across(all_of(numeric_collapse_columns), ~ aggregation(agg_extra, .x), .names = "..num_add"))
+
+        extra_collapse <- extra_collapse |>
+          tidyr::unite("..collapse", {cols}, sep = extra_sep_collapse_columns)
+        data <- data |> left_join(extra_collapse)
+      }
+    }
     extra_data <- data |>
       group_by(across(all_of(group_var))) |>
-      summarise(across(where(~ is.numeric(.x) | is.integer(.x)), ~ aggregation(agg_extra, .x), .names = "{.col}"),
+      summarise(across(where(~ is.numeric(.x) | is.integer(.x)), ~ aggregation(agg_extra, .x), .names = "{.col}_extra"),
                 across(where(~ is.factor(.x) | is.character(.x)), ~ paste_vector(.x, extra_sep), .names = "{.col}"))
 
   }
@@ -86,9 +105,13 @@ aggregation_data <- function (data, agg, group_var, to_agg,
 
   }
 
+
+
   if (extra_col) {
     result <- result |> left_join(extra_data)
   }
+
+
 
   result
 }
