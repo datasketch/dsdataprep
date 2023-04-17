@@ -1,12 +1,13 @@
 test_that("Aggregation", {
   data <- ggplot2::diamonds
-
+   data <- data[1:100,]
+   data$otra <- rep(1:5, 20)
   # Without percentage
   data_result <- aggregation_data(data = data,
                                  agg = "sum",
-                                 to_agg = "x",
-                                 agg_name = "x",
-                                 group_var = c("cut", "color"),
+                                 to_agg = "otra",
+                                 agg_name = "otra",
+                                 group_var = c("cut"),
                                  extra_col = TRUE,
                                  extra_group = "clarity",
                                  collapse_columns = "clarity",

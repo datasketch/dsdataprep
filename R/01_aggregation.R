@@ -61,8 +61,8 @@ aggregation_data <- function (data, agg, group_var, to_agg,
           summarise(across(all_of(numeric_collapse_columns), ~ aggregation(agg_extra, .x), .names = "..num_add"))
 
         extra_collapse <- extra_collapse |>
-          tidyr::unite("..collapse", {cols}, sep = extra_sep_collapse_columns)
-        data <- data |> left_join(extra_collapse)
+          tidyr::unite("..collapse", {cols}, sep = extra_sep_collapse_columns, remove = F)
+        data <- data |> left_join(extra_collapse, by = gv)
       }
     }
     extra_data <- data |>
