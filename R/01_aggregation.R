@@ -54,7 +54,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
     if (!is.null(extra_group)) {
       gv <- c(gv, extra_group)
       if (!is.null(collapse_columns)) {
-        cols <- c( "..num_add", collapse_columns)
+        cols <- c(collapse_columns, "..num_add")
 
         extra_collapse <- data |>
           group_by(across(all_of(gv))) |>
