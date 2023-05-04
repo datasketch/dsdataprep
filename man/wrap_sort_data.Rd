@@ -14,6 +14,7 @@ wrap_sort_data(
   label_wrap_legend = NULL,
   new_line = "<br/>",
   sort = NULL,
+  sort_by_cat = FALSE,
   slice_n = NULL,
   intra_cat = TRUE,
   index_names = NULL

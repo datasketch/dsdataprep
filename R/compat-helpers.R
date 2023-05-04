@@ -38,7 +38,8 @@ paste_vector <- function(x, collapse = ",") {
 #' @import dplyr
 #' @importFrom tidyr all_of
 #' @keywords internal
-numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL,
+numeric_sort <- function(data, col_num, col_cat = NULL,
+                         sort = NULL, sort_by_cat = FALSE,
                          slice_n = NULL, intra_cat = TRUE) {
 
   if (is.null(data)) {
@@ -58,10 +59,10 @@ numeric_sort <- function(data, col_num, col_cat = NULL, sort = NULL,
     }
     if (sort == "desc") {
       data <- data |>
-        arrange(desc(across(all_of(col_num))), .by_group = is.null(col_cat) == FALSE)
+        arrange(desc(across(all_of(col_num))), .by_group = sort_by_cat)
     } else {
       data <- data |>
-        arrange(across(all_of(col_num)), .by_group = is.null(col_cat) == FALSE)
+        arrange(across(all_of(col_num)), .by_group = sort_by_cat)
     }
   }
 

@@ -9,6 +9,7 @@ numeric_sort(
   col_num,
   col_cat = NULL,
   sort = NULL,
+  sort_by_cat = FALSE,
   slice_n = NULL,
   intra_cat = TRUE
 )

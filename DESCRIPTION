@@ -5,8 +5,10 @@ Authors@R:
     person("Camila", "Achuri", email = "camila@randommonkey.io", role = c("aut", "cre"))
 Description: dsdataprep helps manipulationdata by offering functions to aggregate, summarise, sort and wrap data; adds color to the data columns and adds rows information for displaying in interactive plots.
 License: GPL (>= 3)
-Imports: 
+Depends:
     dplyr,
+    R (>= 3.0.0)
+Imports: 
     dstools,
     glue,
     lubridate,

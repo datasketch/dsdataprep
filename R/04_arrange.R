@@ -22,7 +22,7 @@
 #' @export
 wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
                            order_legend = NULL, label_wrap = NULL, label_wrap_legend = NULL,
-                           new_line = "<br/>", sort = NULL,
+                           new_line = "<br/>", sort = NULL, sort_by_cat = FALSE,
                            slice_n = NULL, intra_cat = TRUE, index_names = NULL) {
 
   if (is.null(data)) {
@@ -37,9 +37,11 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
   if (!is.null(col_num)) {
     if (sort == "no") sort <- NULL
     if (!is.null(sort)) {
-      data <- data |> numeric_sort(col_num, col_cat, sort = sort,
-                                   slice_n = slice_n, intra_cat = intra_cat
-                                   )
+      print("in sort")
+      data <- data |>
+        numeric_sort(col_num, col_cat, sort = sort,
+                     slice_n = slice_n, intra_cat = intra_cat
+        )
     }
   }
 
@@ -68,7 +70,7 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
 
 
     if (!is.null(index_names)) {
-    data <- add_group_index(data, col_cat, index_names)
+      data <- add_group_index(data, col_cat, index_names)
     }
 
 
