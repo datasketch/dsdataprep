@@ -34,6 +34,7 @@
 
 aggregation_data <- function (data, agg, group_var, to_agg,
                               agg_name = NULL,
+                              na_rm = TRUE,
                               percentage = FALSE,
                               percentage_name = NULL,
                               percentage_col = NULL,
@@ -61,7 +62,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
 
         extra_collapse <- data |>
           group_by(across(all_of(gv))) |>
-          summarise(across(all_of(numeric_collapse_columns), ~ aggregation(agg_extra, .x), .names = "..num_add"))
+          summarise(across(all_of(numeric_collapse_columns), ~ aggregation(agg_extra, na_rm = na_rm, .x), .names = "..num_add"))
 
         extra_collapse <- extra_collapse |>
           tidyr::unite("..collapse", {cols}, sep = extra_sep_collapse_columns, remove = F)
@@ -70,7 +71,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
     }
     extra_data <- data |>
       group_by(across(all_of(group_var))) |>
-      summarise(across(where(~ is.numeric(.x) | is.integer(.x)), ~ aggregation(agg_extra, .x), .names = "{.col}_extra"),
+      summarise(across(where(~ is.numeric(.x) | is.integer(.x)), ~ aggregation(agg_extra, na_rm = na_rm, .x), .names = "{.col}_extra"),
                 across(where(~ is.factor(.x) | is.character(.x)), ~ paste_vector(.x, extra_sep), .names = "{.col}"))
 
   }
@@ -94,7 +95,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
     result <- data |>
       group_by(across(all_of(group_var))) |>
       summarise(across(all_of(to_agg),
-                       ~ aggregation(agg, as.numeric(.x)),
+                       ~ aggregation(agg, na_rm = na_rm, as.numeric(.x)),
                        .names = ifelse(is.null(agg_name), "{.col}", "{agg_name}")))
 
     if (percentage) {

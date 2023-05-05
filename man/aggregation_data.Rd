@@ -10,6 +10,7 @@ aggregation_data(
   group_var,
   to_agg,
   agg_name = NULL,
+  na_rm = TRUE,
   percentage = FALSE,
   percentage_name = NULL,
   percentage_col = NULL,
