@@ -12,6 +12,7 @@ aggregation_data(
   agg_name = NULL,
   percentage = FALSE,
   percentage_name = NULL,
+  percentage_col = NULL,
   extra_col = FALSE,
   agg_extra = "sum",
   extra_sep = ",",
@@ -35,6 +36,8 @@ aggregation_data(
 \item{percentage}{A logical value indicating whether to calculate percentages}
 
 \item{percentage_name}{A character vector of new names for percentage columns}
+
+\item{percentage_col}{A character with the name of the variable for which you want the percentage to be calculated.}
 
 \item{extra_col}{A logical value indicating whether to include an additional column in the output data frame containing the concatenated values of any factor or character columns.}
 

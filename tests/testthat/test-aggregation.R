@@ -1,23 +1,33 @@
 test_that("Aggregation", {
   data <- ggplot2::diamonds
-   data <- data[1:100,]
-   data$otra <- rep(1:5, 20)
+
+  # dataptc <- data |> select(cut, color, price)
+  # data_result <- aggregation_data(data = dataptc,
+  #                                 agg = "mean", to_agg = "price",
+  #                                 group_var = c("cut", "color"),
+  #                                 percentage = TRUE,
+  #                                 percentage_col = "color")
+
+
+
+  data <- data[1:100,]
+  data$otra <- rep(1:5, 20)
   # Without percentage
   data_result <- aggregation_data(data = data,
-                                 agg = "sum",
-                                 to_agg = "otra",
-                                 agg_name = "otra",
-                                 group_var = c("cut"),
-                                 extra_col = TRUE,
-                                 extra_group = "clarity",
-                                 collapse_columns = "clarity",
-                                 numeric_collapse_columns = "y"
-                                 #agg_extra = NULL
-                                  )
+                                  agg = "sum",
+                                  to_agg = "otra",
+                                  agg_name = "otra",
+                                  group_var = c("cut"),
+                                  extra_col = FALSE,
+                                  extra_group = "clarity",
+                                  collapse_columns = "clarity",
+                                  numeric_collapse_columns = "y"
+                                  #agg_extra = NULL
+  )
 
   data_expect <- data |>
-    dplyr::group_by(cut, color) |>
-    dplyr::summarise(Conteo = dplyr::n())
+    dplyr::group_by(cut) |>
+    dplyr::summarise(otra = sum(otra))
 
   expect_equal(data_result, data_expect)
 
@@ -30,7 +40,9 @@ test_that("Aggregation", {
                                   percentage = TRUE)
 
 
-  data_expect <- data_expect |>
+  data_expect <- data |>
+    dplyr::group_by(cut, color) |>
+    dplyr::summarise(Conteo = n()) |>
     dplyr::mutate(..percentage = (Conteo / sum(Conteo))*100)
 
   expect_equal(data_result, data_expect)
@@ -55,10 +67,10 @@ test_that("Aggregation", {
 
 
   data_result <- aggregation_data(data = data,
-                                 agg = "sum",
-                                 to_agg = c("x", "y"),
-                                 agg_name = c("Suma x", "Suma y"),
-                                 group_var = c("cut"))
+                                  agg = "sum",
+                                  to_agg = c("x", "y"),
+                                  agg_name = c("Suma x", "Suma y"),
+                                  group_var = c("cut"))
 
   data_expect <- data |>
     dplyr::group_by(cut) |>
@@ -80,8 +92,8 @@ test_that("Aggregation", {
     dplyr::group_by(cut) |>
     dplyr::summarise(`Suma x` = sum(x, na.rm = TRUE),
                      `Suma y` = sum(y, na.rm = TRUE)) |>
-    dplyr::mutate(`..percentageSuma x` = `Suma x`/sum(`Suma x`, na.rm = T) * 100,
-                  `..percentageSuma y` = `Suma y`/sum(`Suma y`, na.rm = T) * 100)
+    dplyr::mutate(`..percentage Suma x` = `Suma x`/sum(`Suma x`, na.rm = T) * 100,
+                  `..percentage Suma y` = `Suma y`/sum(`Suma y`, na.rm = T) * 100)
 
 
   expect_equal(data_result, data_expect)
@@ -107,10 +119,10 @@ test_that("Aggregation", {
 
 
   data_result <- aggregation_data(data = data,
-                                 agg = "mean",
-                                 to_agg = "x",
-                                 agg_name = "Promedio",
-                                 group_var = c("clarity", "cut"))
+                                  agg = "mean",
+                                  to_agg = "x",
+                                  agg_name = "Promedio",
+                                  group_var = c("clarity", "cut"))
 
   data_expect <- data |>
     dplyr::group_by(clarity, cut) |>

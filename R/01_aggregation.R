@@ -10,6 +10,7 @@
 #' @param agg_name A character vector of new names for the summary variables
 #' @param percentage A logical value indicating whether to calculate percentages
 #' @param percentage_name A character vector of new names for percentage columns
+#' @param percentage_col A character with the name of the variable for which you want the percentage to be calculated.
 #' @param extra_col A logical value indicating whether to include an additional column in the output data frame containing the concatenated values of any factor or character columns.
 #' @param agg_extra A character string indicating the aggregation function to use for the additional column if \code{extra_col} is \code{TRUE}. Options include "sum", "mean", "median", "min", "max", "count", and "n_distinct".
 #'
@@ -32,8 +33,10 @@
 #' @family dplyr functions
 
 aggregation_data <- function (data, agg, group_var, to_agg,
-                              agg_name = NULL, percentage = FALSE,
+                              agg_name = NULL,
+                              percentage = FALSE,
                               percentage_name = NULL,
+                              percentage_col = NULL,
                               extra_col = FALSE,
                               agg_extra = "sum",
                               extra_sep = ",",
@@ -97,7 +100,11 @@ aggregation_data <- function (data, agg, group_var, to_agg,
     if (percentage) {
       to_percentage <- to_agg
       if (!is.null(agg_name)) to_percentage <- agg_name
-      if (is.null(percentage_name)) percentage_name <- paste0("..percentage", agg_name)
+      if (is.null(percentage_name)) percentage_name <- paste0("..percentage ", agg_name)
+      if (is.null(percentage_col)) {
+        result  <- result |>
+          group_by(across(all_of(percentage_col)))
+      }
       result <- result |>
         mutate(across(all_of(to_percentage), ~ . / sum(.) * 100,
                       .names = "{percentage_name}"))
