@@ -1,12 +1,19 @@
 test_that("Aggregation", {
   data <- ggplot2::diamonds
 
-  # dataptc <- data |> select(cut, color, price)
-  # data_result <- aggregation_data(data = dataptc,
-  #                                 agg = "mean", to_agg = "price",
-  #                                 group_var = c("cut", "color"),
-  #                                 percentage = TRUE,
-  #                                 percentage_col = "color")
+  dataptc <- data |> select(cut, color, price)
+  data_result <- aggregation_data(data = dataptc,
+                                  agg = "mean", to_agg = "price",
+                                  group_var = c("cut", "color"),
+                                  percentage = TRUE,
+                                  percentage_col = "cut")
+
+
+  data_result2 <- aggregation_data(data = dataptc,
+                                  agg = "mean", to_agg = "price",
+                                  group_var = c("cut", "color"),
+                                  percentage = TRUE,
+                                  percentage_col = "color")
 
 
 

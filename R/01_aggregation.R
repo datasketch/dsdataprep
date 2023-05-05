@@ -101,8 +101,8 @@ aggregation_data <- function (data, agg, group_var, to_agg,
       to_percentage <- to_agg
       if (!is.null(agg_name)) to_percentage <- agg_name
       if (is.null(percentage_name)) percentage_name <- paste0("..percentage ", agg_name)
-      if (is.null(percentage_col)) {
-        result  <- result |>
+      if (!is.null(percentage_col)) {
+        result <- result |>
           group_by(across(all_of(percentage_col)))
       }
       result <- result |>
