@@ -107,7 +107,7 @@ aggregation_data <- function (data, agg, group_var, to_agg,
           group_by(across(all_of(percentage_col)))
       }
       result <- result |>
-        mutate(across(all_of(to_percentage), ~ . / sum(.) * 100,
+        mutate(across(all_of(to_percentage), ~ . / sum(., na.rm = TRUE) * 100,
                       .names = "{percentage_name}"))
     }
 
