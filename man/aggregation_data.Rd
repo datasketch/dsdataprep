@@ -11,6 +11,7 @@ aggregation_data(
   to_agg,
   agg_name = NULL,
   na_rm = TRUE,
+  na_label = "(NA)",
   percentage = FALSE,
   percentage_name = NULL,
   percentage_col = NULL,

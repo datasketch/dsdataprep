@@ -32,9 +32,13 @@
 #'
 #' @family dplyr functions
 
-aggregation_data <- function (data, agg, group_var, to_agg,
+aggregation_data <- function (data,
+                              agg,
+                              group_var,
+                              to_agg,
                               agg_name = NULL,
                               na_rm = TRUE,
+                              na_label = "(NA)",
                               percentage = FALSE,
                               percentage_name = NULL,
                               percentage_col = NULL,
@@ -52,6 +56,10 @@ aggregation_data <- function (data, agg, group_var, to_agg,
   class_data <- class(data)
   ..percentage <- NULL
   if ("fringe" %in% class_data) data <- data$data
+
+  if (!is.null(na_label)) {
+  data[,group_var][is.na(data[,group_var])] <- na_label
+  }
 
   if (extra_col) {
     gv <- group_var
