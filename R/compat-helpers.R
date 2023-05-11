@@ -49,9 +49,11 @@ numeric_sort <- function(data, col_num, col_cat = NULL,
   if (sort == "no") sort <- NULL
 
   if (!is.null(sort)) {
-    if (!is.null(col_cat)) {
-      data <- data |>
-        group_by(across(all_of(col_cat)))
+    if (sort_by_cat) {
+      if (!is.null(col_cat)) {
+        data <- data |>
+          group_by(across(all_of(col_cat)))
+      }
     }
     if (sort == "desc") {
       data <- data |>

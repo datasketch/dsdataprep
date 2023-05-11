@@ -35,7 +35,6 @@ wrap_sort_data <- function(data, col_cat = NULL, col_num = NULL, order = NULL,
 
 
   if (!is.null(col_num)) {
-    if (sort == "no") sort <- NULL
     if (!is.null(sort)) {
       print("in sort")
       data <- data |>
