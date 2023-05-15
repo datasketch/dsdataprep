@@ -58,7 +58,11 @@ aggregation_data <- function (data,
   if ("fringe" %in% class_data) data <- data$data
 
   if (!is.null(na_label)) {
-  data[,group_var][is.na(data[,group_var])] <- na_label
+    if (sum(is.na(data[,group_var])) > 0) {
+      data[,group_var] <- purrr::map(data[,group_var], ~as.character(.x)) |>
+        dplyr::bind_rows()
+      data[,group_var][is.na(data[,group_var])] <- na_label
+    }
   }
 
   if (extra_col) {
