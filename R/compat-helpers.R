@@ -42,25 +42,27 @@ numeric_sort <- function(data, col_num, col_cat = NULL,
     stop("The data object must be specified")
   }
 
-  col_num_class <- class(data[[col_num]])
-  if (!(col_num_class %in% c("numeric", "integer"))) {
-    stop("col_num must be numeric")
-  }
-  if (sort == "no") sort <- NULL
-
-  if (!is.null(sort)) {
-    if (sort_by_cat) {
-      if (!is.null(col_cat)) {
-        data <- data |>
-          group_by(across(all_of(col_cat)))
-      }
+  if (length(col_num) == 1) {
+    col_num_class <- class(data[[col_num]])
+    if (!(col_num_class %in% c("numeric", "integer"))) {
+      stop("col_num must be numeric")
     }
-    if (sort == "desc") {
-      data <- data |>
-        arrange(desc(across(all_of(col_num))), .by_group = sort_by_cat)
-    } else {
-      data <- data |>
-        arrange(across(all_of(col_num)), .by_group = sort_by_cat)
+    if (sort == "no") sort <- NULL
+
+    if (!is.null(sort)) {
+      if (sort_by_cat) {
+        if (!is.null(col_cat)) {
+          data <- data |>
+            group_by(across(all_of(col_cat)))
+        }
+      }
+      if (sort == "desc") {
+        data <- data |>
+          arrange(desc(across(all_of(col_num))), .by_group = sort_by_cat)
+      } else {
+        data <- data |>
+          arrange(across(all_of(col_num)), .by_group = sort_by_cat)
+      }
     }
   }
 
