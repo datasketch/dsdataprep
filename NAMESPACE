@@ -2,6 +2,7 @@
 
 export(add_data_colors)
 export(aggregation_data)
+export(data_filter)
 export(prep_tooltip)
 export(wrap_sort_data)
 import(dplyr)
