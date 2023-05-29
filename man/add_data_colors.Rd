@@ -9,7 +9,9 @@ add_data_colors(
   palette_colors = NULL,
   palette_type = "qualitative",
   palette = NULL,
-  color_by = NULL
+  color_by = NULL,
+  na_color = NULL,
+  na_label = "(NA)"
 )
 }
 \arguments{

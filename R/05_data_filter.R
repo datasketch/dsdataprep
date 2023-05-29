@@ -19,7 +19,6 @@ data_filter <- function(data,
   if (is.null(data) || is.null(dic)) return()
   if (is.null(var_inputs) || !is.list(var_inputs)) return(data)
 
-
   df <- purrr::reduce(seq_along(var_inputs), function(df, .x) {
     if (!is.null(var_inputs[[.x]]) && !setequal(var_inputs[[.x]], "")) {
       other_condition <- !is.null(special_placeholder) && setequal(var_inputs[[.x]], special_placeholder)
@@ -38,6 +37,7 @@ data_filter <- function(data,
         }
       }
     }
+
     df
   }, .init = data)
 

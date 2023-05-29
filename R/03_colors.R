@@ -24,7 +24,7 @@
 #' # View the result
 #' print(data_with_colors)
 add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualitative",
-                            palette = NULL, color_by = NULL) {
+                            palette = NULL, color_by = NULL, na_color = NULL, na_label = "(NA)") {
   if (is.null(data)) {
     stop("The data object must be specified")
   }
@@ -78,6 +78,16 @@ add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualita
         left_join(data_colors, by = color_by)
       }
   }
+
+  if (!is.null(na_color)) {
+    if (is.null(color_by)) color_by <- names(data)[1]
+    if (is.na(na_label)) {
+      data$..colors[is.na(data[[color_by]])] <- na_color
+    } else {
+      data$..colors[data[[color_by]] == na_label] <- na_color
+    }
+  }
+
   data
 }
 
