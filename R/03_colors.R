@@ -82,7 +82,9 @@ add_data_colors <- function(data, palette_colors = NULL, palette_type = "qualita
   if (!is.null(na_color)) {
     if (is.null(color_by)) color_by <- names(data)[1]
     if (is.na(na_label)) {
+      if (sum(is.na(data[[color_by]])) > 0) {
       data$..colors[is.na(data[[color_by]])] <- na_color
+      }
     } else {
       data$..colors[data[[color_by]] == na_label] <- na_color
     }
