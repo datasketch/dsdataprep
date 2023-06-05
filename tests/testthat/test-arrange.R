@@ -14,7 +14,7 @@ test_that("Sort numeric and categorical var", {
     arrange(carat, .by_group = TRUE)
   expect_equal(data_result, data_expect)
 
-  data_result <- numeric_sort(data, col_num = c("carat"), col_cat = c("cut", "clarity"), sort = "desc")
+  data_result <- numeric_sort(data, col_num = c("carat"), col_cat = c("cut", "color"), sort = "desc")
   data_expect <- data %>%
     group_by(cut, clarity) %>%
     arrange(-carat, .by_group = TRUE)
@@ -30,7 +30,7 @@ test_that("Sort numeric and categorical var", {
   expect_equal(as.character(unique(data_result$cut)[1:2]), data_expect)
 
 
-  data_result <- add_group_index(data, c("cut", "color"), c("index", "index_leng"))
+  data_result <- dsdataprep:::add_group_index(data, c("cut", "color"), c("index", "index_leng"))
   expect_equal(names(data_result), c(names(data), c("index", "index_leng")))
 
 

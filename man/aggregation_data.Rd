@@ -8,7 +8,7 @@ aggregation_data(
   data,
   agg,
   group_var,
-  to_agg,
+  to_agg = NULL,
   agg_name = NULL,
   na_rm = TRUE,
   na_label = "(NA)",

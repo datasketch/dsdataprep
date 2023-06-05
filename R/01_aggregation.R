@@ -35,7 +35,7 @@
 aggregation_data <- function (data,
                               agg,
                               group_var,
-                              to_agg,
+                              to_agg = NULL,
                               agg_name = NULL,
                               na_rm = TRUE,
                               na_label = "(NA)",
@@ -90,13 +90,7 @@ aggregation_data <- function (data,
     result <- data |>
       group_by(across(all_of(group_var))) |>
       summarise(count = n())
-    if (percentage) {
-      result <- result |>
-        mutate(..percentage = (count / sum(count))*100)
-      if (!is.null(percentage_name)) {
-        result <- result |> rename(!!percentage_name := ..percentage)
-      }
-    }
+
     if (!is.null(agg_name)) {
       result <- result |> rename(!!agg_name := count)
     }
@@ -107,21 +101,23 @@ aggregation_data <- function (data,
                        ~ aggregation(agg, na_rm = na_rm, as.numeric(.x)),
                        .names = ifelse(is.null(agg_name), "{.col}", "{agg_name}")))
 
-    if (percentage) {
-      to_percentage <- to_agg
-      if (!is.null(agg_name)) to_percentage <- agg_name
-      if (is.null(percentage_name)) percentage_name <- paste0("..percentage ", agg_name)
-      if (!is.null(percentage_col)) {
-        result <- result |>
-          group_by(across(all_of(percentage_col)))
-      }
-      result <- result |>
-        mutate(across(all_of(to_percentage), ~ . / sum(., na.rm = TRUE) * 100,
-                      .names = "{percentage_name}"))
-    }
+
 
   }
 
+  if (percentage) {
+    to_percentage <- to_agg %||% agg_name %||% "count"
+    #if (!is.null(agg_name)) to_percentage <- agg_name
+    if (is.null(percentage_name)) percentage_name <- paste0("..percentage ", agg_name)
+    if (!is.null(percentage_col)) {
+      result <- result |>
+        ungroup() |>
+        group_by(across(all_of(percentage_col)))
+    }
+    result <- result |>
+      mutate(across(all_of(to_percentage), ~ . / sum(., na.rm = TRUE) * 100,
+                    .names = "{percentage_name}"))
+  }
 
 
   if (extra_col) {
