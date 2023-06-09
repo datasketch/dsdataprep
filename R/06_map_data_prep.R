@@ -8,6 +8,8 @@ data_map_draw <- function(data = NULL,
 
 
   if(!is.null(data)){
+    d <- data
+    if ("hdtable" %in% class(data)) d <- d$data
 
     d <- tryCatch({
       geodato::gd_match(d = d, map_name = map_name)
