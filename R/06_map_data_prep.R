@@ -1,3 +1,4 @@
+#' @export
 data_map_draw <- function(data = NULL,
                           var = NULL,
                           opts = NULL) {
