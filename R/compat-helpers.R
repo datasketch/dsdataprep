@@ -68,10 +68,14 @@ numeric_sort <- function(data, col_num, col_cat = NULL,
   }
 
   if (!is.null(slice_n)) {
-    if (!intra_cat) {
+
+    if (intra_cat) {
+      data <- data |> group_by(across(all_of(col_cat)))
+    } else {
       data <- data |> ungroup()
     }
-    data <- data |> slice_head(n = slice_n)
+
+     data <- data |> slice_head(n = slice_n)
   }
 
   data
