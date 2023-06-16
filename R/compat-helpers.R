@@ -85,12 +85,14 @@ numeric_sort <- function(data, col_num, col_cat = NULL,
 #' Add group index to a data frame based on specified group columns
 #' @keywords internal
 add_group_index <- function(data, group_cols, index_cols = NULL) {
+  group_cols <- rev(group_cols)
 
   if (is.null(index_cols)) {
     index_cols <- paste0("index_", group_cols)
   }
 
   for (i in seq_along(group_cols)) {
+
     # Convert the group column to factor with the levels in the order they appear in the data
     levels <- unique(data[[group_cols[i]]])
     data[[group_cols[i]]] <- factor(data[[group_cols[i]]], levels = levels)
