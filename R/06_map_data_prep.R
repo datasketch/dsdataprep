@@ -44,7 +44,7 @@ data_map_draw <- function(data = NULL,
       if (class(d[[col]]) %in% c("character", "factor")) {
         order_legend <- opts$legend_cat_order
         print(order_legend)
-        if (is.null(order_legend)) order_legend <- unique(d[[col]])
+        if (is.na(order_legend)) order_legend <- unique(d[[col]])
         d$..var <- as.integer(factor(d[[col]], levels = order_legend))
       } else {
         d$..var <- d[[col]]
