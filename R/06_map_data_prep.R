@@ -42,7 +42,10 @@ data_map_draw <- function(data = NULL,
     if (!is.null(var)) {
       col <- geodato::parse_col(d, var)
       if (class(d[[col]]) %in% c("character", "factor")) {
-        d$..var <- as.integer(factor(d[[col]]))
+        order_legend <- opts$legend_cat_order
+        print(order_legend)
+        if (is.null(order_legend)) order_legend <- unique(d[[col]])
+        d$..var <- as.integer(factor(d[[col]], levels = order_legend))
       } else {
         d$..var <- d[[col]]
       }
