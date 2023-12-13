@@ -17,6 +17,10 @@ Imports:
     rlang,
     stringr,
     tidyr
+Remotes:
+    datasketch/paletero,
+    datasketch/makeup,
+    datasketch/dstools
 Suggests: 
     ggplot2,
     testthat (>= 3.0.0)
