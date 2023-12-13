@@ -75,6 +75,7 @@ filter_ranges <- function(data, range, by) {
   if (is.null(range)) return(data)
 
   column_values <- data[[by]]
+  if (all(is.na(column_values))) return(data)
   min_value <- min(column_values, na.rm = TRUE)
   max_value <- max(column_values, na.rm = TRUE)
 
