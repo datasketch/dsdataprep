@@ -13,7 +13,6 @@ Imports:
     glue,
     lubridate,
     makeup,
-    paletero,
     purrr,
     rlang,
     stringr,

@@ -72,25 +72,29 @@ get_tpl_vars <- function(tpl){
 
 filter_ranges <- function(data, range, by) {
   if (is.null(data)) return()
+  if (is.null(range)) return(data)
 
-  min_date <- min(data[[by]], na.rm = TRUE)
-  max_date <- max(data[[by]], na.rm = TRUE)
+  column_values <- data[[by]]
+  min_value <- min(column_values, na.rm = TRUE)
+  max_value <- max(column_values, na.rm = TRUE)
 
-  if (length(range) == 2) {
-    if (min_date == range[1] & max_date == range[2]) {
-      data_filter <- data
+  if (all(is.na(column_values))) {
+    return(data)
+  } else if (length(range) == 2) {
+    if (!is.finite(min_value) || !is.finite(max_value)) {
+      return(data)
+    } else if (min_value == range[1] & max_value == range[2]) {
+      return(data)
     } else {
-      data_filter <- data |>
-        dplyr::filter(!!dplyr::sym(by) >= range[1] &
-                        !!dplyr::sym(by) <= range[2])
+      data_filter <- dplyr::filter(data, !!dplyr::sym(by) >= range[1], !!dplyr::sym(by) <= range[2])
     }
   } else {
-    data_filter <-  data |>
-      dplyr::filter(!!dplyr::sym(by) == range)
+    data_filter <- dplyr::filter(data, !!dplyr::sym(by) == range)
   }
   data_filter
-
 }
+
+
 
 paste_vector <- function(x, collapse = ",") {
   paste0(trimws(unique(x)), collapse = collapse)
